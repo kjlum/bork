@@ -1,13 +1,31 @@
-<div ng-controller="IndexController">
+<div id="profile" ng-controller="IndexController">
+    <super-navbar>
+        <super-navbar-title>
+            Bork
+        </super-navbar-title>
+    </super-navbar>
 
-  <super-navbar>
-    <super-navbar-title>
-      Index
-    </super-navbar-title>
-  </super-navbar>
+    <div class="puppy-information">
+        <h3 class="puppy-name">Bork</h3>
+        <div>
+            <img class="profile-picture" src="/images/puppy.jpg" alt="puppy" />
+        </div>
+        <div>
+            <p>Breed:</p>
+        </div>
+        <div>
+            <p>Age:</p>
+        </div>
+    </div>
 
-  <div class="padding">
-    <h1>Pow! Here's your fresh module!</h1>
-  </div>
+    <div class="puppy-summary">
+        <h3>Summary</h3>
 
+    </div>
+
+    <div class="profile-menu">
+        <button class="button">
+            <i class="icon super-navicon"></i>
+        </button>
+    </div>
 </div>
