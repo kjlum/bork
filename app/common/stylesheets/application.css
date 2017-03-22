@@ -6,10 +6,14 @@
 
 #profile {
     background-color: lightgray;
-    padding: 10px;
     width: 100%;
     height: 100%;
+    padding: 10px;
     position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    overflow: auto;
 }
 
 .profile-menu {
@@ -17,29 +21,70 @@
     background-color: blue;
 }
 
-.profile-menu .button {
+#paw, #history, #potty, #health, #settings {
     position: fixed;
-    bottom: 0;
-    right: 0;
     height: 60px;
     width: 60px;
     border: 2px solid black;
     border-radius: 50%;
     margin: 20px;
+}
+
+.profile-menu .button {
+    bottom: 0;
+    right: 0;
     background-color: lightblue;
 }
 
-.profile-picture {
-    width: 120px;
-    height: 120px;
+#history {
+    bottom: 150px;
+    right: 0;
+    background-color: red;
+}
+
+#potty {
+    bottom: 130px;
+    right: 75px;
+    background-color: orange;
+}
+
+#health {
+    bottom: 75px;
+    right: 130px;
+    background-color: yellow;
+}
+
+#settings {
+    bottom: 0;
+    right: 150px;
+    background-color: green;
+}
+
+.profile-picture, .puppy-characteristics {
+    padding: 0px 5px;
     float: left;
 }
 
-.puppy-information, .puppy-summary {
+.profile-picture img {
+    width: 120px;
+    height: 120px;
+}
+
+.puppy-information {
+    display: inline-block;
+}
+
+.puppy-name {
+    padding: 5px 5px 0px 5px;
+    text-align: center;
+}
+
+.puppy-profile, .puppy-summary {
     display: inline-block;
     width: 100%;
     background-color: white;
     border-radius: 5px;
     margin: 10px 0px;
-    padding: 5px;
+    padding: 10px;
 }
+

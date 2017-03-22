@@ -5,27 +5,55 @@
         </super-navbar-title>
     </super-navbar>
 
-    <div class="puppy-information">
-        <h3 class="puppy-name">Bork</h3>
-        <div>
-            <img class="profile-picture" src="/images/puppy.jpg" alt="puppy" />
-        </div>
-        <div>
-            <p>Breed:</p>
-        </div>
-        <div>
-            <p>Age:</p>
+    <div class="puppy-profile">
+        <h3 class="puppy-name">Bobo</h3>
+        <div class="puppy-information">
+            <div class="profile-picture">
+                <img src="/images/puppy.jpg" alt="puppy" />
+            </div>
+            <div class="puppy-characteristics">
+                <div>
+                    <p>Breed:</p>
+                </div>
+                <div>
+                    <p>Age:</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="puppy-summary">
         <h3>Summary</h3>
-
+        <hr>
+        <div class="health-information">
+            <div>
+                <p>Last potty:</p>
+            </div>
+            <div>
+                <p>Approx. next potty:</p>
+            </div>
+            <div>
+                <p>Current symptoms:</p>
+            </div>
+        </div>
     </div>
 
     <div class="profile-menu">
-        <button class="button">
-            <i class="icon super-navicon"></i>
+        <button id="history" class="button icon" ng-show="showMenu">
+            <i class="icon super-heart"></i>
+        </button>
+        <button id="potty" class="button icon" ng-show="showMenu">
+            <i class="icon super-nuclear"></i>
+        </button>
+        <button id="health" class="button icon" ng-show="showMenu">
+            <i class="icon super-medkit"></i>
+        </button>
+        <button id="settings" class="button icon" ng-show="showMenu">
+            <i class="icon super-gear-a"></i>
+        </button>
+
+        <button id="paw" class="button" ng-click="toggleMenu()">
+            <i class="icon super-ios-paw"></i>
         </button>
     </div>
 </div>
