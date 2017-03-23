@@ -1,4 +1,4 @@
-<div id="profile" ng-controller="IndexController">
+<div id="profile-view" ng-controller="IndexController">
     <super-navbar>
         <super-navbar-title>
             Bork
@@ -6,17 +6,19 @@
     </super-navbar>
 
     <div class="puppy-profile">
-        <h3 class="puppy-name">Bobo</h3>
+        <h3 class="page-name">Bobo</h3>
         <div class="puppy-information">
             <div class="profile-picture">
                 <img src="/images/puppy.jpg" alt="puppy" />
             </div>
             <div class="puppy-characteristics">
                 <div>
-                    <p>Breed:</p>
+                    <p class="title">Breed:</p>
+                    <p>Australian Shepherd</p>
                 </div>
                 <div>
-                    <p>Age:</p>
+                    <p class="title">Age:</p>
+                    <p>4 months</p>
                 </div>
             </div>
         </div>
@@ -27,19 +29,19 @@
         <hr>
         <div class="health-information">
             <div>
-                <p>Last potty:</p>
+                <p class="title">Last potty: 26 minutes now</p>
             </div>
             <div>
-                <p>Approx. next potty:</p>
+                <p class="title">Approx. next potty: 2 hours</p>
             </div>
             <div>
-                <p>Current symptoms:</p>
+                <p class="title">Current symptoms: none</p>
             </div>
         </div>
     </div>
 
     <div class="profile-menu">
-        <button id="history" class="button icon fadeMenu" ng-show="showMenu">
+        <button id="history" class="button icon fadeMenu" ng-show="showMenu" ng-click="showHistory()">
             <i class="icon super-heart"></i>
         </button>
         <button id="potty" class="button icon fadeMenu" ng-show="showMenu">

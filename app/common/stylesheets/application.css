@@ -11,14 +11,18 @@
 }
 
 .fadeMenu.ng-hide-remove, .fadeMenu.ng-hide-add, .list.ng-hide {
-    display: block!important;
+    display: block !important;
 }
 
 .fadeMenu.ng-hide {
     opacity: 0;
 }
 
-#profile {
+.title {
+    font-size: 14pt;
+}
+
+#profile-view, #history-view {
     background-color: lightgray;
     width: 100%;
     height: 100%;
@@ -35,6 +39,12 @@
     background-color: blue;
 }
 
+.profile-menu .button {
+    bottom: 0;
+    right: 0;
+    background-color: lightblue;
+}
+
 #paw, #history, #potty, #health, #settings {
     position: fixed;
     height: 60px;
@@ -42,12 +52,6 @@
     border: 2px solid black;
     border-radius: 50%;
     margin: 20px;
-}
-
-.profile-menu .button {
-    bottom: 0;
-    right: 0;
-    background-color: lightblue;
 }
 
 #history {
@@ -74,6 +78,10 @@
     background-color: green;
 }
 
+.page-name {
+    text-align: center;
+}
+
 .profile-picture, .puppy-characteristics {
     padding: 0px 5px;
     float: left;
@@ -85,12 +93,8 @@
 }
 
 .puppy-information {
+    padding-top: 5px;
     display: inline-block;
-}
-
-.puppy-name {
-    padding: 5px 5px 0px 5px;
-    text-align: center;
 }
 
 .puppy-profile, .puppy-summary {
