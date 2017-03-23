@@ -4,6 +4,20 @@
     font-weight: 600;
 }
 
+.fadeMenu {
+    -webkit-transition: 0.2s linear all;
+    transition:  0.2s linear all;
+    opacity: 1;
+}
+
+.fadeMenu.ng-hide-remove, .fadeMenu.ng-hide-add, .list.ng-hide {
+    display: block!important;
+}
+
+.fadeMenu.ng-hide {
+    opacity: 0;
+}
+
 #profile {
     background-color: lightgray;
     width: 100%;
