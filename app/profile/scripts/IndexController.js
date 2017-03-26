@@ -2,20 +2,19 @@ angular
     .module('profile', ['common', 'ngAnimate'])
     .controller('IndexController', function($scope, supersonic) {
         // Controller functionality here
-        var newUser = localStorage.getItem('isNewUser');
-        var puppies = localStorage.getItem('puppies');
-        if(newUser == null) {
-            supersonic.logger.log("heyo");
-            // new user, show welcome screen
-            localStorage.setItem('isNewUser', JSON.stringify("true"));
-            var view = new supersonic.ui.View("profile#initial");
-            supersonic.ui.layers.push(view);
-        } else {
 
+        var init = function() {
+            $scope.showMenu = false;
+
+            var puppies = localStorage.getItem('puppies');
+            if(puppies === null) {
+                // new user, show welcome screen
+                $scope.showProfile = false;
+            } else {
+                $scope.showProfile = true;
+            }
         }
         
-
-        $scope.showMenu = false;
         $scope.toggleMenu = function() {
             $scope.showMenu = !$scope.showMenu;
         };
@@ -36,15 +35,30 @@ angular
             localStorage.clear();
         };
 
-        $scope.newProfile = function() {
-            var view = new supersonic.ui.View("profile#new");
-            supersonic.ui.layers.push(view);
+        $scope.saveProfile = function() {
+            var name = $scope.name;
+            var birthday = $scope.birthday;
+            var breed = $scope.breed;
+            if(angular.isUndefined(name) || name === null) {
+                supersonic.ui.dialog.alert("Please include a name.");
+            } else {
+                var profile = 
+                    {
+                        "name": name,
+                        "birthday": birthday,
+                        "breed": breed
+                    };
+                var puppies = JSON.parse(localStorage.getItem('puppies'));
+                if(puppies === null) {
+                    puppies = [];
+                }
+                puppies.push(profile);
+                localStorage.setItem('puppies', JSON.stringify(puppies));
+
+                // TODO: refresh profile view
+                $scope.showProfile = true;
+            }
         };
 
-        $scope.finishProfile = function() {
-            if(puppies == null) {
-                // TODO: first puppy
-
-            }
-        }
+        init();
   });
