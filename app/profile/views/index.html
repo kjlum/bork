@@ -1,11 +1,11 @@
-<div id="profile-view" ng-controller="IndexController">
+<div class="view" ng-controller="IndexController">
     <super-navbar>
         <super-navbar-title>
             Bork
         </super-navbar-title>
     </super-navbar>
 
-    <div class="puppy-profile">
+    <div class="white-panel">
         <h3 class="page-name">Bobo</h3>
         <div class="puppy-information">
             <div class="profile-picture">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="puppy-summary">
+    <div class="white-panel">
         <h3>Summary</h3>
         <hr>
         <div class="health-information">
@@ -58,4 +58,7 @@
             <i class="icon super-ios-paw"></i>
         </button>
     </div>
+    <button class="button" ng-click="clear()">
+        <i class="icon super-heart"></i>
+    </button>
 </div>
