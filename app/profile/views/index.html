@@ -5,35 +5,7 @@
         </super-navbar-title>
     </super-navbar>
 
-    <!-- Create new profile if the user has none -->
-    <div class="nonuser" ng-hide="showProfile">
-        <div class="white-panel">
-            <h3 class="page-name">Welcome!</h3>
-
-            <div id="intro">
-                <p class="page-name title">Let's start by adding a puppy profile:</p>
-            </div>
-                
-            <div>
-                <label class="title">Puppy name: <input class="puppy-input" type="text" ng-model="name" /></label>
-            </div>
-
-            <div>
-                <label class="title">Puppy birthday: <input class="puppy-input" type="text" ng-model="birthday" /></label>
-            </div>
-
-            <div>
-                <label class="title">Puppy breed: <input class="puppy-input" type="text" ng-model="breed" /></label>
-            </div>
-
-            <button id="save" class="button" ng-click="saveProfile()">
-                Save
-            </button>
-        </div>
-    </div>
-
-    <!-- Show puppy profile if the user has one -->
-    <div class="user" ng-show="showProfile">
+    <div class="user">
         <div ng-repeat="puppy in puppies">
             <div class="white-panel">
                 <h3 class="page-name">{{puppy.name}}</h3>
@@ -81,7 +53,7 @@
             <button id="health" class="button icon fadeMenu" ng-show="showMenu">
                 <i class="icon super-medkit"></i>
             </button>
-            <button id="settings" class="button icon fadeMenu" ng-show="showMenu">
+            <button id="settings" class="button icon fadeMenu" ng-show="showMenu" ng-click="showSettings()">
                 <i class="icon super-gear-a"></i>
             </button>
 

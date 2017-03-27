@@ -7,13 +7,11 @@ angular
             $scope.showMenu = false;
 
             var puppies = localStorage.getItem('puppies');
-            if(puppies === null) {
-                // new user, show welcome screen
-                $scope.showProfile = false;
-            } else {
-                $scope.showProfile = true;
+            if(puppies !== null) {
+                supersonic.ui.initialView.dismiss();
                 $scope.puppies = JSON.parse(puppies);
             }
+            // otherwise, let it go to the initial view
         }
         
         $scope.toggleMenu = function() {
@@ -31,6 +29,16 @@ angular
             var view = new supersonic.ui.View("profile#potty");
             supersonic.ui.layers.push(view);
         };
+
+        $scope.showSettings = function() {
+            $scope.showMenu = false;
+            var view = new supersonic.ui.View("profile#settings");
+            supersonic.ui.layers.push(view);
+        };
+
+        $scope.showNewPuppy = function() {
+            supersonic.ui.initialView.show();
+        }
 
         $scope.clear = function() {
             localStorage.clear();
@@ -56,9 +64,9 @@ angular
                 puppies.push(profile);
                 localStorage.setItem('puppies', JSON.stringify(puppies));
 
-                // TODO: refresh profile view
-                $scope.showProfile = true;
+                // TODO: reset initialview values to undefined
                 $scope.puppies = puppies;
+                supersonic.ui.initialView.dismiss();
             }
         };
 
