@@ -12,6 +12,7 @@ angular
                 $scope.showProfile = false;
             } else {
                 $scope.showProfile = true;
+                $scope.puppies = JSON.parse(puppies);
             }
         }
         
@@ -57,6 +58,7 @@ angular
 
                 // TODO: refresh profile view
                 $scope.showProfile = true;
+                $scope.puppies = puppies;
             }
         };
 

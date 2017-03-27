@@ -5,66 +5,6 @@
         </super-navbar-title>
     </super-navbar>
 
-    <!-- Show puppy profile if the user has one -->
-    <div class="user" ng-show="showProfile">
-        <div class="white-panel">
-            <h3 class="page-name">Bobo</h3>
-            <div class="puppy-information">
-                <div class="profile-picture">
-                    <img src="/images/puppy.jpg" alt="puppy" />
-                </div>
-                <div class="puppy-characteristics">
-                    <div>
-                        <p class="title">Breed:</p>
-                        <p>Australian Shepherd</p>
-                    </div>
-                    <div>
-                        <p class="title">Age:</p>
-                        <p>4 months</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="white-panel">
-            <h3>Summary</h3>
-            <hr>
-            <div class="health-information">
-                <div>
-                    <p class="title">Last potty: 26 minutes now</p>
-                </div>
-                <div>
-                    <p class="title">Approx. next potty: 2 hours</p>
-                </div>
-                <div>
-                    <p class="title">Current symptoms: none</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="profile-menu">
-            <button id="history" class="button icon fadeMenu" ng-show="showMenu" ng-click="showHistory()">
-                <i class="icon super-android-time"></i>
-            </button>
-            <button id="potty" class="button icon fadeMenu" ng-show="showMenu" ng-click="showPotty()">
-                <i class="icon super-nuclear"></i>
-            </button>
-            <button id="health" class="button icon fadeMenu" ng-show="showMenu">
-                <i class="icon super-medkit"></i>
-            </button>
-            <button id="settings" class="button icon fadeMenu" ng-show="showMenu">
-                <i class="icon super-gear-a"></i>
-            </button>
-
-            <button id="paw" class="button" ng-click="toggleMenu()">
-                <i class="icon super-ios-paw"></i>
-            </button>
-        </div>
-        <button class="button" ng-click="clear()">
-            <i class="icon super-heart"></i>
-        </button>
-    </div>
-
     <!-- Create new profile if the user has none -->
     <div class="nonuser" ng-hide="showProfile">
         <div class="white-panel">
@@ -90,6 +30,68 @@
                 Save
             </button>
         </div>
+    </div>
+
+    <!-- Show puppy profile if the user has one -->
+    <div class="user" ng-show="showProfile">
+        <div ng-repeat="puppy in puppies">
+            <div class="white-panel">
+                <h3 class="page-name">{{puppy.name}}</h3>
+                <div class="puppy-information">
+                    <div class="profile-picture">
+                        <img src="/images/puppy.jpg" alt="puppy" />
+                    </div>
+                    <div class="puppy-characteristics">
+                        <div>
+                            <p class="title">Breed:</p>
+                            <p>{{puppy.breed}}</p>
+                        </div>
+                        <div>
+                            <p class="title">Age:</p>
+                            <p>{{puppy.birthday}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="white-panel">
+                <h3>Summary</h3>
+                <hr>
+                <div class="health-information">
+                    <div>
+                        <p class="title">Last potty: 26 minutes now</p>
+                    </div>
+                    <div>
+                        <p class="title">Approx. next potty: 2 hours</p>
+                    </div>
+                    <div>
+                        <p class="title">Current symptoms: none</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-menu">
+            <button id="history" class="button icon fadeMenu" ng-show="showMenu" ng-click="showHistory()">
+                <i class="icon super-android-time"></i>
+            </button>
+            <button id="potty" class="button icon fadeMenu" ng-show="showMenu" ng-click="showPotty()">
+                <i class="icon super-nuclear"></i>
+            </button>
+            <button id="health" class="button icon fadeMenu" ng-show="showMenu">
+                <i class="icon super-medkit"></i>
+            </button>
+            <button id="settings" class="button icon fadeMenu" ng-show="showMenu">
+                <i class="icon super-gear-a"></i>
+            </button>
+
+            <button id="paw" class="button" ng-click="toggleMenu()">
+                <i class="icon super-ios-paw"></i>
+            </button>
+        </div>
+        <button class="button" ng-click="clear()">
+            <i class="icon super-heart"></i>
+        </button>
     </div>
 
 </div>
