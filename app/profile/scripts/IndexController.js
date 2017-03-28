@@ -1,10 +1,11 @@
 angular
-    .module('profile', ['common', 'ngAnimate'])
+    .module('profile', ['common', 'ngAnimate', 'ngTouch'])
     .controller('IndexController', function($scope, supersonic) {
         // Controller functionality here
 
         var init = function() {
             $scope.showMenu = false;
+            $scope.puppy_index = 0;
 
             var puppies = localStorage.getItem('puppies');
             if(puppies !== null) {
@@ -70,5 +71,22 @@ angular
             }
         };
 
+        $scope.nextProfile = function() {
+            if($scope.puppy_index >= $scope.puppies.length - 1) {
+                $scope.puppy_index = 0;
+            } else {
+                $scope.puppy_index++;
+            }
+        };
+
+        $scope.previousProfile = function() {
+            if($scope.puppy_index <= 0) {
+                $scope.puppy_index = $scope.puppies.length - 1;
+            } else {
+                $scope.puppy_index--;
+            }
+        };
+
         init();
+
   });

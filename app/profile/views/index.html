@@ -5,40 +5,46 @@
         </super-navbar-title>
     </super-navbar>
 
-    <div class="user">
+    <div class="user" ng-swipe-left="nextProfile()" ng-swipe-right="previousProfile()">
         <div ng-repeat="puppy in puppies">
-            <div class="white-panel">
-                <h3 class="page-name">{{puppy.name}}</h3>
-                <div class="puppy-information">
-                    <div class="profile-picture">
-                        <img src="/images/puppy.jpg" alt="puppy" />
-                    </div>
-                    <div class="puppy-characteristics">
-                        <div>
-                            <p class="title">Breed:</p>
-                            <p>{{puppy.breed}}</p>
+            <div ng-show="puppy_index == $index">
+                <div class="white-panel">
+                    <h3 class="page-name">{{puppy.name}}</h3>
+                    <div class="puppy-information">
+                        <div class="profile-picture">
+                            <img src="/images/puppy.jpg" alt="puppy" />
                         </div>
-                        <div>
-                            <p class="title">Age:</p>
-                            <p>{{puppy.birthday}}</p>
+                        <div class="puppy-characteristics">
+                            <div>
+                                <p class="title">Breed:</p>
+                                <p>{{puppy.breed}}</p>
+                            </div>
+                            <div>
+                                <p class="title">Age:</p>
+                                <p>{{puppy.birthday}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="white-panel">
-                <h3>Summary</h3>
-                <hr>
-                <div class="health-information">
-                    <div>
-                        <p class="title">Last potty: 26 minutes now</p>
+                <div class="white-panel">
+                    <h3>Summary</h3>
+                    <hr>
+                    <div class="health-information">
+                        <div>
+                            <p class="title">Last potty: 26 minutes now</p>
+                        </div>
+                        <div>
+                            <p class="title">Approx. next potty: 2 hours</p>
+                        </div>
+                        <div>
+                            <p class="title">Current symptoms: none</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="title">Approx. next potty: 2 hours</p>
-                    </div>
-                    <div>
-                        <p class="title">Current symptoms: none</p>
-                    </div>
+                </div>
+
+                <div id="carousel">
+                    {{$index + 1}} of {{puppies.length}}
                 </div>
             </div>
         </div>
