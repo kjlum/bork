@@ -4,6 +4,22 @@
     font-weight: 600;
 }
 
+#carousel {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.circle {
+    border-radius: 50%;
+    border: 2px solid black;
+    width: 10px;
+    height: 10px;
+    margin: 0px 5px;
+    display: inline-block;
+}
+
 .fadeMenu {
     -webkit-transition: 0.2s linear all;
     transition:  0.2s linear all;

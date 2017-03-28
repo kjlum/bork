@@ -87,6 +87,12 @@ angular
             }
         };
 
+        $scope.setColor = function(index) {
+            if($scope.puppy_index == index) {
+                return { backgroundColor: "blue" }
+            }
+        };
+
         init();
 
   });
