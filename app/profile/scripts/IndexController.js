@@ -5,6 +5,7 @@ angular
 
         var init = function() {
             $scope.showMenu = false;
+            $scope.showPictureMenu = false;
             $scope.puppy_index = 0;
 
             var puppies = localStorage.getItem('puppies');
@@ -97,6 +98,24 @@ angular
             if($scope.puppy_index == index) {
                 return { backgroundColor: "blue" }
             }
+        };
+
+        $scope.choosePicture = function() {
+            $scope.showPictureMenu = true;
+        };
+
+        $scope.chooseFromLibrary = function() {
+            $scope.showPictureMenu = false;
+            var options = {
+                quality: 50,
+                allowEdit: true,
+                targetWidth: 300,
+                targetHeight: 300,
+                encodingType: "png",
+            };
+            supersonic.media.camera.getFromPhotoLibrary(options).then(function(result){
+                // TODO: store result, 
+            });
         };
 
         init();

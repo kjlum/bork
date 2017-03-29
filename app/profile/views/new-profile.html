@@ -1,3 +1,4 @@
+<!-- TODO: conditional navbar, conditional intro -->
 <div class="nonuser" ng-controller="IndexController">
     <div class="white-panel">
         <h3 class="page-name" ng-show="showWelcome">Welcome!</h3>
@@ -7,7 +8,7 @@
         </div>
             
         <div>
-            <label class="title">Puppy name: <input class="puppy-input" type="text" ng-model="name" /></label>
+            <label class="title">Puppy name (required): <input class="puppy-input" type="text" ng-model="name" /></label>
         </div>
 
         <div>
@@ -16,6 +17,23 @@
 
         <div>
             <label class="title">Puppy breed: <input class="puppy-input" type="text" ng-model="breed" /></label>
+        </div>
+
+        <div>
+            <button class="button puppy-input picture-menu" ng-click="choosePicture()">
+                Choose Picture
+            </button>
+        </div>
+
+        <div id="picture-menu" ng-show="showPictureMenu">
+            <button class="item item-icon-left picture-item" ng-click="chooseFromLibrary()">
+                <i class="icon super-upload"></i>
+                Choose from library
+            </button>
+            <button class="item item-icon-left picture-item" ng-click="takePicture()">
+                <i class="icon super-ios-camera"></i>
+                Take picture
+            </button>
         </div>
 
         <button id="save" class="button" ng-click="saveProfile()">
