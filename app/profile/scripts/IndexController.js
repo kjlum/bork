@@ -6,12 +6,14 @@ angular
         var init = function() {
             $scope.showMenu = false;
             $scope.showPictureMenu = false;
+            $scope.puppyPicture = null;
+            $scope.showProfiles = false;
             $scope.puppy_index = 0;
 
             var puppies = localStorage.getItem('puppies');
+            $scope.puppies = JSON.parse(puppies);
             if(puppies !== null) {
                 supersonic.ui.initialView.dismiss();
-                $scope.puppies = JSON.parse(puppies);
                 $scope.showWelcome = false;                
             } else {
                 // otherwise, let it go to the initial view
@@ -42,6 +44,7 @@ angular
         };
 
         $scope.showNewPuppy = function() {
+            $scope.puppyPicture = null;
             supersonic.ui.initialView.show();
         }
 
@@ -63,19 +66,28 @@ angular
                         "breed": breed,
                         "last_potty": "none",
                         "next_potty": "none",
-                        "symptoms": "none"
+                        "symptoms": "none",
+                        "picture": $scope.puppyPicture
                     };
-                var puppies = JSON.parse(localStorage.getItem('puppies'));
-                if(puppies === null) {
-                    puppies = [];
+                $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+                if($scope.puppies === null) {
+                    $scope.puppies = [];
                 }
-                puppies.push(profile);
-                localStorage.setItem('puppies', JSON.stringify(puppies));
+                $scope.puppies.push(profile);
+                localStorage.setItem('puppies', JSON.stringify($scope.puppies));
 
                 // TODO: reset initialview values to undefined
-                $scope.puppies = puppies;
                 supersonic.ui.initialView.dismiss();
             }
+        };
+
+        $scope.editProfile = function() {
+            $scope.showProfiles = true;
+        };
+
+        $scope.editPuppy = function(puppy) {
+            $scope.showProfiles = false;
+            // TODO: go to the edit page for this puppy
         };
 
         $scope.nextProfile = function() {
@@ -105,16 +117,33 @@ angular
         };
 
         $scope.chooseFromLibrary = function() {
-            $scope.showPictureMenu = false;
             var options = {
                 quality: 50,
+                destinationType: "dataURL",
                 allowEdit: true,
                 targetWidth: 300,
                 targetHeight: 300,
                 encodingType: "png",
             };
-            supersonic.media.camera.getFromPhotoLibrary(options).then(function(result){
-                // TODO: store result, 
+            supersonic.media.camera.getFromPhotoLibrary(options).then(function(result) {
+                $scope.showPictureMenu = false;
+                $scope.puppyPicture = result;
+            });
+        };
+
+        $scope.takePicture = function() {
+            var options = {
+                quality: 50,
+                destinationType: "dataURL",
+                allowEdit: true,
+                targetWidth: 300,
+                targetHeight: 300,
+                encodingType: "png",
+                saveToPhotoAlbum: false
+            };
+            supersonic.media.camera.takePicture(options).then(function(result) {
+                $scope.showPictureMenu = false;
+                $scope.puppyPicture = result;
             });
         };
 

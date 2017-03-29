@@ -20,6 +20,10 @@
             <i class="icon super-trash-b"></i>
             Delete all data
         </a>
-
     </div>
+
+    <div class="center-menu" ng-show="showProfiles">
+        <button class="item picture-item" ng-repeat="puppy in puppies" ng-click="editPuppy(puppy)">{{puppy.name}}</button>
+    </div>
+
 </div>

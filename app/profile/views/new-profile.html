@@ -20,12 +20,15 @@
         </div>
 
         <div>
-            <button class="button puppy-input picture-menu" ng-click="choosePicture()">
+            <button class="button puppy-input picture-menu" ng-click="choosePicture()" ng-show="puppyPicture === null">
                 Choose Picture
+            </button>
+            <button class="button puppy-input picture-menu" ng-click="choosePicture()"  ng-show="puppyPicture !== null">
+                Change Picture
             </button>
         </div>
 
-        <div id="picture-menu" ng-show="showPictureMenu">
+        <div class="center-menu" ng-show="showPictureMenu">
             <button class="item item-icon-left picture-item" ng-click="chooseFromLibrary()">
                 <i class="icon super-upload"></i>
                 Choose from library
