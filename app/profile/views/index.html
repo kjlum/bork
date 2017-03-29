@@ -32,13 +32,13 @@
                     <hr>
                     <div class="health-information">
                         <div>
-                            <p class="title">Last potty: 26 minutes now</p>
+                            <p class="title">Last potty: {{puppy.last_potty}}</p>
                         </div>
                         <div>
-                            <p class="title">Approx. next potty: 2 hours</p>
+                            <p class="title">Approx. next potty: {{puppy.next_potty}}</p>
                         </div>
                         <div>
-                            <p class="title">Current symptoms: none</p>
+                            <p class="title">Current symptoms: {{puppy.symptoms}}</p>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         </div>
     </div>
     
-    <div id="carousel">
+    <div id="carousel" ng-show="puppies.length > 1">
         <div class="circle" ng-repeat="puppy in puppies" ng-style="setColor($index)"></div>
     </div>
 
@@ -68,8 +68,5 @@
             <i class="icon super-ios-paw"></i>
         </button>
     </div>
-    <button class="button" ng-click="clear()">
-        <i class="icon super-heart"></i>
-    </button>
 
 </div>

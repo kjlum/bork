@@ -34,6 +34,13 @@
     opacity: 0;
 }
 
+.nothing {
+    color: gray;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+}
+
 .title {
     font-size: 14pt;
 }

@@ -4,26 +4,18 @@
     </super-navbar-title>
 </super-navbar>
 
-<div class="view">
+<div class="view" ng-controller="HistoryController">
     <h3 class="page-name">History</h3>
     <hr>
 
-    <div class="list">
-        <div class="item item-divider">
-            February 17
-        </div>
+    <div class="nothing" ng-show="history === null">Nothing here!</div>
 
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-happy-outline"></i>
+    <div class="list" ng-show="history !== null">
+        <a class="item item-icon-left" href="#" ng-repeat="event in history">
+            <i class="icon super-happy-outline" ng-if="event.type == 'intentional'"></i>
+            <i class="icon super-sad-outline" ng-if="event.type == 'accident'"></i>
+            <i class="icon super-heart" ng-if="event.type == 'health'"></i>
             Pee
-        </a>
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-sad-outline"></i>
-            Poop
-        </a>
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-heart"></i>
-            Cough
         </a>
     </div>
 </div>

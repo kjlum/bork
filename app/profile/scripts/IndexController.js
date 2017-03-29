@@ -11,8 +11,11 @@ angular
             if(puppies !== null) {
                 supersonic.ui.initialView.dismiss();
                 $scope.puppies = JSON.parse(puppies);
+                $scope.showWelcome = false;                
+            } else {
+                // otherwise, let it go to the initial view
+                $scope.showWelcome = true;
             }
-            // otherwise, let it go to the initial view
         }
         
         $scope.toggleMenu = function() {
@@ -56,7 +59,10 @@ angular
                     {
                         "name": name,
                         "birthday": birthday,
-                        "breed": breed
+                        "breed": breed,
+                        "last_potty": "none",
+                        "next_potty": "none",
+                        "symptoms": "none"
                     };
                 var puppies = JSON.parse(localStorage.getItem('puppies'));
                 if(puppies === null) {
@@ -95,4 +101,4 @@ angular
 
         init();
 
-  });
+    });
