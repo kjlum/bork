@@ -35,6 +35,26 @@ angular
             }
             return today.getFullYear() + "-" + month + "-" + day;
         }
+
+        var formatDate = function(date) {
+            if(isNullorUndefined(date)) {
+                return "--";
+            }
+            var date = new Date(date);
+            var month = date.getMonth() + 1;
+            if(month < 10) {
+                month = '0' + month;
+            }
+            var day = date.getDate();
+            if(day < 10) {
+                day = '0' + day;
+            }
+            return date.getFullYear() + "-" + month + "-" + day;
+        }
+
+        var isNullorUndefined = function(item) {
+            return angular.isUndefined(item) || item === null;
+        }
         
         $scope.toggleMenu = function() {
             $scope.showMenu = !$scope.showMenu;
@@ -65,13 +85,24 @@ angular
 
         $scope.clear = function() {
             localStorage.clear();
+            supersonic.ui.initialView.show();
         };
 
         $scope.saveProfile = function() {
             var name = $scope.name;
-            var birthday = $scope.birthday;
+            var birthday = formatDate($scope.birthday);
             var breed = $scope.breed;
-            if(angular.isUndefined(name) || name === null) {
+            var puppyPicture = "/images/default_puppy.jpg";
+
+            if(!isNullorUndefined($scope.puppyPicture)) {
+                puppyPicture = "data:image/png;base64, " + $scope.puppyPicture;
+            }
+
+            if(isNullorUndefined(breed)) {
+                breed = "--";
+            }
+
+            if(isNullorUndefined(name)) {
                 supersonic.ui.dialog.alert("Please include a name.");
             } else {
                 var profile = 
@@ -82,7 +113,7 @@ angular
                         "last_potty": "none",
                         "next_potty": "none",
                         "symptoms": "none",
-                        "picture": $scope.puppyPicture
+                        "picture": puppyPicture
                     };
                 $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
                 if($scope.puppies === null) {

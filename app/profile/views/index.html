@@ -12,7 +12,7 @@
                     <h3 class="page-name">{{puppy.name}}</h3>
                     <div class="puppy-information">
                         <div class="profile-picture">
-                            <img ng-src="data:image/png;base64, {{puppy.picture}}" alt="puppy" />
+                            <img src="{{puppy.picture}}" alt="puppy" />
                         </div>
                         <div class="puppy-characteristics">
                             <div>
@@ -20,7 +20,7 @@
                                 <p>{{puppy.breed}}</p>
                             </div>
                             <div>
-                                <p class="title">Age:</p>
+                                <p class="title">Birthday:</p>
                                 <p>{{puppy.birthday}}</p>
                             </div>
                         </div>
