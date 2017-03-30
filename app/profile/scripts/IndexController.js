@@ -1,5 +1,5 @@
 angular
-    .module('profile', ['common', 'ngAnimate', 'ngTouch', 'ngAria', 'ngMaterial'])
+    .module('profile', ['common', 'ngAnimate', 'ngTouch'])
     .controller('IndexController', function($scope, supersonic) {
         // Controller functionality here
 
@@ -9,6 +9,7 @@ angular
             $scope.puppyPicture = null;
             $scope.showProfiles = false;
             $scope.puppy_index = 0;
+            $scope.today = getDate();
 
             var puppies = localStorage.getItem('puppies');
             $scope.puppies = JSON.parse(puppies);
@@ -19,6 +20,20 @@ angular
                 // otherwise, let it go to the initial view
                 $scope.showWelcome = true;
             }
+
+        }
+
+        var getDate = function() {
+            var today = new Date();
+            var month = today.getMonth() + 1;
+            if(month < 10) {
+                month = '0' + month;
+            }
+            var day = today.getDate();
+            if(day < 10) {
+                day = '0' + day;
+            }
+            return today.getFullYear() + "-" + month + "-" + day;
         }
         
         $scope.toggleMenu = function() {

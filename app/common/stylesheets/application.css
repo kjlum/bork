@@ -26,10 +26,6 @@
     align-self: center;
 }
 
-input {
-    padding: 5px;
-}
-
 .page-name {
     text-align: center;
 }
@@ -147,6 +143,11 @@ input {
     bottom: 0;
     right: 150px;
     background-color: green;
+}
+
+.title input {
+    padding: 6px 5px;
+    background-color: white;
 }
 
 /* New profile view */

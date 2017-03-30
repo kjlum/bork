@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "angular": "1.6.3",
-    "supersonic": "1.x"
+    "supersonic": "1.x",
+    "angular-animate": "^1.6.3",
+    "angular-touch": "^1.6.3"
   }
 }
