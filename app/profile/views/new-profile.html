@@ -29,22 +29,24 @@
         </div>
 
         <div class="center-menu" ng-show="showPictureMenu">
-            <button class="item item-icon-left picture-item" ng-click="chooseFromLibrary()">
-                <i class="icon super-upload"></i>
-                Choose from library
-            </button>
-            <button class="item item-icon-left picture-item" ng-click="takePicture()">
-                <i class="icon super-ios-camera"></i>
-                Take picture
-            </button>
-            <button class="item item-icon-left picture-item" ng-click="deletePicture()" ng-show="puppyPicture !== null">
-                <i class="icon super-trash-b"></i>
-                Delete picture
-            </button>
-            <button class="item item-icon-left picture-item" ng-click="cancelPicture()">
-                <i class="icon super-close-round"></i>
-                Cancel
-            </button>
+            <div class="center-menu-options">
+                <button class="item item-icon-left picture-item" ng-click="chooseFromLibrary()">
+                    <i class="icon super-upload"></i>
+                    Choose from library
+                </button>
+                <button class="item item-icon-left picture-item" ng-click="takePicture()">
+                    <i class="icon super-ios-camera"></i>
+                    Take picture
+                </button>
+                <button class="item item-icon-left picture-item" ng-click="deletePicture()" ng-show="puppyPicture !== null">
+                    <i class="icon super-trash-b"></i>
+                    Delete picture
+                </button>
+                <button class="item item-icon-left picture-item" ng-click="cancelPicture()">
+                    <i class="icon super-close-round"></i>
+                    Cancel
+                </button>
+            </div>
         </div>
 
         <button id="save" class="button" ng-click="saveProfile()">
