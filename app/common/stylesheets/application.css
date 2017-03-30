@@ -26,6 +26,10 @@
     align-self: center;
 }
 
+input {
+    padding: 5px;
+}
+
 .page-name {
     text-align: center;
 }

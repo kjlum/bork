@@ -1,5 +1,5 @@
 angular
-    .module('profile', ['common', 'ngAnimate', 'ngTouch'])
+    .module('profile', ['common', 'ngAnimate', 'ngTouch', 'ngAria', 'ngMaterial'])
     .controller('IndexController', function($scope, supersonic) {
         // Controller functionality here
 
