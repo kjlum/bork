@@ -120,6 +120,15 @@ angular
             $scope.showPictureMenu = true;
         };
 
+        $scope.cancelPicture = function() {
+            $scope.showPictureMenu = false;
+        }
+
+        $scope.deletePicture = function() {
+            $scope.showPictureMenu = false;
+            $scope.puppyPicture = null;
+        }
+
         $scope.chooseFromLibrary = function() {
             var options = {
                 quality: 50,
