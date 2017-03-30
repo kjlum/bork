@@ -5,13 +5,14 @@
 }
 
 /* Multiple views */
-.center-menu {
-    margin: auto;
+.center-menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 250px;
-    height: 200px;
-    display: block;
-    overflow: auto;
-    background-color: lightgray;
+    margin: 0 auto;
+
     position: absolute;
     top: 0;
     bottom: 0;
@@ -19,10 +20,10 @@
     right: 0;
 }
 
-.center-menu-options {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
+.center-menu-item {
+    width: 250px;
+    display: inline-block;
+    align-self: center;
 }
 
 .page-name {
@@ -154,11 +155,6 @@
 
 #intro {
     margin-bottom: 20px;
-}
-
-.picture-item {
-    width: 100%;
-    margin: 0 !important;
 }
 
 #save {
