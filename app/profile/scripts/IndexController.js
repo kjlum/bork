@@ -76,8 +76,12 @@ angular
                 $scope.puppies.push(profile);
                 localStorage.setItem('puppies', JSON.stringify($scope.puppies));
 
-                // TODO: reset initialview values to undefined
                 supersonic.ui.initialView.dismiss();
+                // reset initial view values
+                $scope.name = null;
+                $scope.birthday = null;
+                $scope.breed = null;
+                $scope.puppyPicture = null;
             }
         };
 
