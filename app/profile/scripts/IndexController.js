@@ -20,8 +20,7 @@ angular
                 // otherwise, let it go to the initial view
                 $scope.showWelcome = true;
             }
-
-        }
+        };
 
         var getDate = function() {
             var today = new Date();
@@ -34,7 +33,7 @@ angular
                 day = '0' + day;
             }
             return today.getFullYear() + "-" + month + "-" + day;
-        }
+        };
 
         var formatDate = function(date) {
             if(isNullorUndefined(date)) {
@@ -50,11 +49,11 @@ angular
                 day = '0' + day;
             }
             return date.getFullYear() + "-" + month + "-" + day;
-        }
+        };
 
         var isNullorUndefined = function(item) {
             return angular.isUndefined(item) || item === null;
-        }
+        };
         
         $scope.toggleMenu = function() {
             $scope.showMenu = !$scope.showMenu;

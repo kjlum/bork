@@ -4,22 +4,32 @@
     </super-navbar-title>
 </super-navbar>
 
-<div class="view">
+<div class="view" ng-controller="PottyController">
     <h3 class="page-name">Potty</h3>
     <hr>
+    
+    <div class="white-panel">
+        <h4 class="page-name">Potty Frequency</h4>
+        <div class="nothing" ng-show="pfrequency === null">Nothing here!</div>
 
-    <div class="list">
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-happy-outline"></i>
-            Thing
-        </a>
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-sad-outline"></i>
-            Thing
-        </a>
-        <a class="item item-icon-left" href="#">
-            <i class="icon super-heart"></i>
-            Thing
-        </a>
+        <h4 class="page-name">Accident Frequency</h4>
+        <div class="nothing" ng-show="afrequency === null">Nothing here!</div>
     </div>
+
+    <div class="white-panel">
+        <h3>Event History</h3>
+
+        <div class="nothing" ng-show="potty === null">Nothing here!</div>
+
+        <div class="list" ng-show="potty !== null">
+            <a class="item item-icon-left" href="#" ng-repeat="event in potty">
+                <i class="icon super-happy-outline"></i>
+                {{event.potty_type}}
+            </a>
+        </div>
+    </div>
+
+    <button class="button main-menu" ng-click="toggleMenu()">
+        <i class="icon super-plus-round"></i>
+    </button>
 </div>

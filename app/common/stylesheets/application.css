@@ -95,7 +95,7 @@
     background-color: yellow;
 }
 
-#health, #history, #paw, #potty, #settings {
+#health, #history, #paw, #potty, #settings, .main-menu {
     position: fixed;
     height: 60px;
     width: 60px;
@@ -121,10 +121,11 @@
     background-color: blue;
 }
 
-.profile-menu .button {
+.main-menu {
     bottom: 0;
     right: 0;
     background-color: lightblue;
+    z-index: 999;
 }
 
 .puppy-information {
