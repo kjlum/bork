@@ -1,15 +1,36 @@
 angular
     .module('profile', ['common', 'ngAnimate', 'ngTouch'])
-    .controller('IndexController', function($scope, supersonic) {
-        // Controller functionality here
+    .service('util', function() {
+        return {
+            isNullorUndefined: function(item) {
+                return angular.isUndefined(item) || item === null;
+            }
+        };
+    })
+    .service('sharePuppy', function () {
+        var puppyIndex = 0;
+
+        return {
+            getPuppyIndex: function () {
+                return puppyIndex;
+            },
+            setPuppyIndex: function(value) {
+                puppyIndex = value;
+            }
+        };
+    })
+    .controller('IndexController', function($scope, supersonic, util, sharePuppy) {
 
         var init = function() {
-            $scope.showMenu = false;
+            // main
+            $scope.showMainMenu = false;
             $scope.showPictureMenu = false;
             $scope.puppyPicture = null;
             $scope.showProfiles = false;
             $scope.puppy_index = 0;
             $scope.today = getDate();
+            // potty
+            $scope.showPottyMenu = false
 
             var puppies = localStorage.getItem('puppies');
             $scope.puppies = JSON.parse(puppies);
@@ -36,7 +57,7 @@ angular
         };
 
         var formatDate = function(date) {
-            if(isNullorUndefined(date)) {
+            if(util.isNullorUndefined(date)) {
                 return "--";
             }
             var date = new Date(date);
@@ -50,29 +71,24 @@ angular
             }
             return date.getFullYear() + "-" + month + "-" + day;
         };
-
-        var isNullorUndefined = function(item) {
-            return angular.isUndefined(item) || item === null;
-        };
         
-        $scope.toggleMenu = function() {
-            $scope.showMenu = !$scope.showMenu;
+        /* Functions for the index and new profile views */
+        $scope.toggleMainMenu = function() {
+            $scope.showMainMenu = !$scope.showMainMenu;
         };
 
-        $scope.showHistory = function() {
-            $scope.showMenu = false;
+        $scope.showHistoryView = function() {
+            $scope.showMainMenu = false;
             var view = new supersonic.ui.View("profile#history");
             supersonic.ui.layers.push(view);
         };
 
-        $scope.showPotty = function() {
-            $scope.showMenu = false;
-            var view = new supersonic.ui.View("profile#potty");
-            supersonic.ui.layers.push(view);
+        $scope.showPottyView = function() {
+            $scope.showMainMenu = false;
         };
 
         $scope.showSettings = function() {
-            $scope.showMenu = false;
+            $scope.showMainMenu = false;
             var view = new supersonic.ui.View("profile#settings");
             supersonic.ui.layers.push(view);
         };
@@ -93,15 +109,15 @@ angular
             var breed = $scope.breed;
             var puppyPicture = "/images/default_puppy.jpg";
 
-            if(!isNullorUndefined($scope.puppyPicture)) {
+            if(!util.isNullorUndefined($scope.puppyPicture)) {
                 puppyPicture = "data:image/png;base64, " + $scope.puppyPicture;
             }
 
-            if(isNullorUndefined(breed)) {
+            if(util.isNullorUndefined(breed)) {
                 breed = "--";
             }
 
-            if(isNullorUndefined(name)) {
+            if(util.isNullorUndefined(name)) {
                 supersonic.ui.dialog.alert("Please include a name.");
             } else {
                 var profile = 
@@ -145,6 +161,7 @@ angular
             } else {
                 $scope.puppy_index++;
             }
+            sharePuppy.setPuppyIndex($scope.puppy_index);
         };
 
         $scope.previousProfile = function() {
@@ -204,6 +221,11 @@ angular
                 $scope.puppyPicture = result;
             });
         };
+
+        /* Functions for the potty view */
+        $scope.togglePottyMenu = function() {
+            $scope.showPottyMenu = !$scope.showPottyMenu;
+        }
 
         init();
 

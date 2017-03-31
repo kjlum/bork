@@ -50,21 +50,23 @@
         <div class="circle" ng-repeat="puppy in puppies" ng-style="setColor($index)"></div>
     </div>
 
-    <div class="profile-menu">
-        <button id="history" class="button icon fadeMenu" ng-show="showMenu" ng-click="showHistory()">
+    <div class="button-menu">
+        <button id="history" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showHistoryView()">
             <i class="icon super-android-time"></i>
         </button>
-        <button id="potty" class="button icon fadeMenu" ng-show="showMenu" ng-click="showPotty()">
-            <i class="icon super-nuclear"></i>
-        </button>
-        <button id="health" class="button icon fadeMenu" ng-show="showMenu">
+        <super-navigate view-id="potty">
+            <button id="potty" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showPottyView()">
+                <i class="icon super-nuclear"></i>
+            </button>
+        </super-navigate>
+        <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
             <i class="icon super-medkit"></i>
         </button>
-        <button id="settings" class="button icon fadeMenu" ng-show="showMenu" ng-click="showSettings()">
+        <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showSettings()">
             <i class="icon super-gear-a"></i>
         </button>
 
-        <button id="paw" class="button main-menu" ng-click="toggleMenu()">
+        <button id="paw" class="button main-menu" ng-click="toggleMainMenu()">
             <i class="icon super-ios-paw"></i>
         </button>
     </div>

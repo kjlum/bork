@@ -7,16 +7,16 @@ module.exports =
   rootView:
     location: "profile#index"
 
-  #preloads: [
-  #  {
-  #    id: "learn-more"
-  #    location: "example#learn-more"
-  #  }
+  preloads: [
+    {
+      id: "potty"
+      location: "profile#potty"
+    }
   #  {
   #    id: "using-the-scanner"
   #    location: "example#using-the-scanner"
   #  }
-  #]
+  ]
 
   # drawers:
   #   left:
