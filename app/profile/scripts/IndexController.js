@@ -230,7 +230,7 @@ angular
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             if(!util.isNullorUndefined($scope.puppy)) {
-                $scope.potties = $scope.puppy.name;
+                $scope.potties = $scope.puppy.potty;
             }
         });
 
@@ -241,9 +241,9 @@ angular
         init();
 
         supersonic.data.channel('puppyIndex').subscribe(function(message) {
-            supersonic.ui.dialog.alert("subscribe " + message);
-            $scope.currentPuppyIndex = message;
-            supersonic.logger.log($scope.currentPuppyIndex);
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+            });
         });
 
     });
