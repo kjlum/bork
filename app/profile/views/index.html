@@ -5,7 +5,7 @@
         </super-navbar-title>
     </super-navbar>
 
-    <div class="user" ng-swipe-left="nextProfile()" ng-swipe-right="previousProfile()">
+    <div ng-class="dim" ng-swipe-left="nextProfile()" ng-swipe-right="previousProfile()">
         <div ng-repeat="puppy in puppies">
             <div ng-show="puppy_index == $index">
                 <div class="white-panel">
@@ -44,31 +44,33 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div id="carousel" ng-show="puppies.length > 1">
-        <div class="circle" ng-repeat="puppy in puppies" ng-style="setColor($index)"></div>
-    </div>
 
-    <div class="button-menu">
-        <button id="history" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showHistoryView()">
-            <i class="icon super-android-time"></i>
-        </button>
-        <super-navigate view-id="potty">
-            <button id="potty" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showPottyView()">
-                <i class="icon super-nuclear"></i>
+        <div id="carousel" ng-show="puppies.length > 1">
+            <div class="circle" ng-repeat="puppy in puppies" ng-style="setColor($index)"></div>
+        </div>
+
+        <div class="button-menu">
+            <super-navigate location="profile#history">
+                <button id="history" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showHistoryView()">
+                    <i class="icon super-android-time"></i>
+                </button>
+            </super-navigate>
+            <super-navigate view-id="potty">
+                <button id="potty" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showPottyView()">
+                    <i class="icon super-nuclear"></i>
+                </button>
+            </super-navigate>
+            <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
+                <i class="icon super-medkit"></i>
             </button>
-        </super-navigate>
-        <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
-            <i class="icon super-medkit"></i>
-        </button>
-        <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showSettings()">
-            <i class="icon super-gear-a"></i>
-        </button>
-
-        <button id="paw" class="button main-menu" ng-click="toggleMainMenu()">
-            <i class="icon super-ios-paw"></i>
-        </button>
+            <super-navigate location="profile#settings">
+                <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showSettings()">
+                    <i class="icon super-gear-a"></i>
+                </button>
+            </super-navigate>
+            <button id="paw" class="button main-menu" ng-click="toggleMainMenu()">
+                <i class="icon super-ios-paw"></i>
+            </button>
+        </div>
     </div>
-
 </div>

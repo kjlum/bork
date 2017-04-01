@@ -5,6 +5,12 @@
 }
 
 /* Multiple views */
+.button-menu {
+    position: relative;
+    background-color: blue;
+    z-index: 999;
+}
+
 .center-menu-container {
     display: flex;
     flex-direction: column;
@@ -24,6 +30,27 @@
     width: 250px;
     display: inline-block;
     align-self: center;
+}
+
+.fadeMenu {
+    -webkit-transition: 0.2s linear all;
+    transition:  0.2s linear all;
+    opacity: 1;
+}
+
+.fadeMenu.ng-hide-remove, .fadeMenu.ng-hide-add, .list.ng-hide {
+    display: block !important;
+}
+
+.fadeMenu.ng-hide {
+    opacity: 0;
+}
+
+.main-menu {
+    bottom: 0;
+    right: 0;
+    background-color: lightblue;
+    z-index: 999;
 }
 
 .page-name {
@@ -56,6 +83,19 @@
     overflow: auto;
 }
 
+.view-dark {
+    background: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    overflow: auto;
+}
+
 .white-panel {
     display: inline-block;
     width: 100%;
@@ -75,18 +115,28 @@
     display: inline-block;
 }
 
-.fadeMenu {
-    -webkit-transition: 0.2s linear all;
-    transition:  0.2s linear all;
-    opacity: 1;
+.puppy-information {
+    padding-top: 5px;
+    display: inline-block;
 }
 
-.fadeMenu.ng-hide-remove, .fadeMenu.ng-hide-add, .list.ng-hide {
-    display: block !important;
+.puppy-input {
+    display: block;
+    margin: 10px auto 20px auto;
+    width: 90%;
+    border: 2px solid black !important;
 }
 
-.fadeMenu.ng-hide {
-    opacity: 0;
+.title input {
+    padding: 6px 5px;
+    background-color: white;
+}
+
+/* Menu buttons */
+#accident {
+    bottom: 0;
+    right: 100px;
+    background-color: red;
 }
 
 #health {
@@ -95,7 +145,7 @@
     background-color: yellow;
 }
 
-#health, #history, #paw, #potty, #settings, .main-menu {
+#health, #history, #paw, #potty, #settings, .main-menu, #intentional, #accident {
     position: fixed;
     height: 60px;
     width: 60px;
@@ -110,34 +160,16 @@
     background-color: red;
 }
 
+#intentional {
+    bottom: 100px;
+    right: 0;
+    background-color: green;
+}
+
 #potty {
     bottom: 130px;
     right: 75px;
     background-color: orange;
-}
-
-.button-menu {
-    position: relative;
-    background-color: blue;
-}
-
-.main-menu {
-    bottom: 0;
-    right: 0;
-    background-color: lightblue;
-    z-index: 999;
-}
-
-.puppy-information {
-    padding-top: 5px;
-    display: inline-block;
-}
-
-.puppy-input {
-    display: block;
-    margin: 10px auto 20px auto;
-    width: 90%;
-    border: 2px solid black !important;
 }
 
 #settings {
@@ -146,10 +178,7 @@
     background-color: green;
 }
 
-.title input {
-    padding: 6px 5px;
-    background-color: white;
-}
+
 
 /* New profile view */
 #carousel {

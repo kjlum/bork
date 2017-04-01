@@ -7,7 +7,7 @@ module.exports =
   rootView:
     location: "profile#index"
 
-  preloads: [
+   preloads: [
     {
       id: "potty"
       location: "profile#potty"

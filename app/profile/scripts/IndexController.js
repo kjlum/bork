@@ -7,19 +7,7 @@ angular
             }
         };
     })
-    .service('sharePuppy', function () {
-        var puppyIndex = 0;
-
-        return {
-            getPuppyIndex: function () {
-                return puppyIndex;
-            },
-            setPuppyIndex: function(value) {
-                puppyIndex = value;
-            }
-        };
-    })
-    .controller('IndexController', function($scope, supersonic, util, sharePuppy) {
+    .controller('IndexController', function($scope, supersonic, util) {
 
         var init = function() {
             // main
@@ -29,8 +17,7 @@ angular
             $scope.showProfiles = false;
             $scope.puppy_index = 0;
             $scope.today = getDate();
-            // potty
-            $scope.showPottyMenu = false
+            $scope.dim = "";
 
             var puppies = localStorage.getItem('puppies');
             $scope.puppies = JSON.parse(puppies);
@@ -75,28 +62,33 @@ angular
         /* Functions for the index and new profile views */
         $scope.toggleMainMenu = function() {
             $scope.showMainMenu = !$scope.showMainMenu;
+            if($scope.dim === "") {
+                $scope.dim = "view-dark";
+            } else {
+                $scope.dim = "";
+            }
         };
 
         $scope.showHistoryView = function() {
             $scope.showMainMenu = false;
-            var view = new supersonic.ui.View("profile#history");
-            supersonic.ui.layers.push(view);
+            $scope.dim = "";
         };
 
         $scope.showPottyView = function() {
+            supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
             $scope.showMainMenu = false;
+            $scope.dim = "";
         };
 
         $scope.showSettings = function() {
             $scope.showMainMenu = false;
-            var view = new supersonic.ui.View("profile#settings");
-            supersonic.ui.layers.push(view);
+            $scope.dim = "";
         };
 
         $scope.showNewPuppy = function() {
             $scope.puppyPicture = null;
             supersonic.ui.initialView.show();
-        }
+        };
 
         $scope.clear = function() {
             localStorage.clear();
@@ -128,7 +120,9 @@ angular
                         "last_potty": "none",
                         "next_potty": "none",
                         "symptoms": "none",
-                        "picture": puppyPicture
+                        "picture": puppyPicture,
+                        "health": [],
+                        "potty": []
                     };
                 $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
                 if($scope.puppies === null) {
@@ -161,7 +155,6 @@ angular
             } else {
                 $scope.puppy_index++;
             }
-            sharePuppy.setPuppyIndex($scope.puppy_index);
         };
 
         $scope.previousProfile = function() {
@@ -184,12 +177,12 @@ angular
 
         $scope.cancelPicture = function() {
             $scope.showPictureMenu = false;
-        }
+        };
 
         $scope.deletePicture = function() {
             $scope.showPictureMenu = false;
             $scope.puppyPicture = null;
-        }
+        };
 
         $scope.chooseFromLibrary = function() {
             var options = {
@@ -222,11 +215,35 @@ angular
             });
         };
 
+        init();
+    })
+    .controller('PottyController', function($scope, supersonic, util) {
         /* Functions for the potty view */
+        var init = function() {
+            // potty
+            $scope.showPottyMenu = false;
+            $scope.potties = [];
+            $scope.currentPuppyIndex = 0;
+        };
+
+        supersonic.ui.views.current.whenVisible(function () {
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            if(!util.isNullorUndefined($scope.puppy)) {
+                $scope.potties = $scope.puppy.name;
+            }
+        });
+
         $scope.togglePottyMenu = function() {
             $scope.showPottyMenu = !$scope.showPottyMenu;
-        }
+        };
 
         init();
+
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            supersonic.ui.dialog.alert("subscribe " + message);
+            $scope.currentPuppyIndex = message;
+            supersonic.logger.log($scope.currentPuppyIndex);
+        });
 
     });
