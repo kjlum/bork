@@ -71,6 +71,11 @@
     font-size: 14pt;
 }
 
+.title input {
+    padding: 6px 5px;
+    background-color: white;
+}
+
 .view {
     background-color: lightgray;
     width: 100%;
@@ -84,8 +89,7 @@
 }
 
 .view-dark {
-    background: black;
-    opacity: 0.5;
+    background-color: black;
     width: 100%;
     height: 100%;
     padding: 10px;
@@ -94,6 +98,8 @@
     left: 0;
     display: inline-block;
     overflow: auto;
+    opacity: 0.6;
+    z-index: 900;
 }
 
 .white-panel {
@@ -125,11 +131,6 @@
     margin: 10px auto 20px auto;
     width: 90%;
     border: 2px solid black !important;
-}
-
-.title input {
-    padding: 6px 5px;
-    background-color: white;
 }
 
 /* Menu buttons */
@@ -178,8 +179,6 @@
     background-color: green;
 }
 
-
-
 /* New profile view */
 #carousel {
     width: 100%;
@@ -206,3 +205,20 @@
     width: 100%;
     padding: 15px;
 }
+
+/* Potty view */
+.checkbox-label {
+    font-size: 14pt;
+}
+
+.potty-type, .potty-intention {
+    display: block;
+    margin: 10px auto 20px auto;
+    width: 90%;
+    text-align: center;
+}
+
+.potty-type input {
+    margin: 5px 5px 5px 20px;
+}
+

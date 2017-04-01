@@ -5,7 +5,9 @@
         </super-navbar-title>
     </super-navbar>
 
-    <div ng-class="dim" ng-swipe-left="nextProfile()" ng-swipe-right="previousProfile()">
+    <div ng-class="dim"></div>
+    
+    <div ng-swipe-left="nextProfile()" ng-swipe-right="previousProfile()">
         <div ng-repeat="puppy in puppies">
             <div ng-show="puppy_index == $index">
                 <div class="white-panel">

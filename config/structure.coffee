@@ -12,10 +12,10 @@ module.exports =
       id: "potty"
       location: "profile#potty"
     }
-  #  {
-  #    id: "using-the-scanner"
-  #    location: "example#using-the-scanner"
-  #  }
+    {
+      id: "new-potty"
+      location: "profile#new-potty"
+    }
   ]
 
   # drawers:

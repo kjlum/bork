@@ -1,0 +1,39 @@
+<div class="view" ng-controller="PottyController">
+    <super-navbar>
+        <super-navbar-title ng-bind="puppy.name">
+        </super-navbar-title>
+    </super-navbar>
+
+    <div>
+        <h3 class="page-name">Add Potty Event</h3>
+        <hr>
+        
+        <div class="white-panel">
+            <label class="title">
+                Date and Time:
+                <input class="puppy-input" type="datetime-local"/>
+            </label>
+
+            <div class="potty-type">
+                <label class="checkbox-label">
+                    <input type="checkbox" ng-model="pee" />
+                    Pee
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" ng-model="poop" />
+                    Poop
+                </label>
+            </div>
+
+            <div class="potty-intention">
+                <label class="checkbox-label">
+                    <input type="checkbox" ng-model="accident" />
+                    Accident
+                </label>
+            </div>
+        </div>
+
+        <div class="button-menu">
+        </div>
+    </div>
+</div>

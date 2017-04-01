@@ -1,7 +1,6 @@
 <div class="view" ng-controller="PottyController">
     <super-navbar>
-        <super-navbar-title>
-            Bobo
+        <super-navbar-title ng-bind="puppy.name">
         </super-navbar-title>
     </super-navbar>
 
@@ -31,12 +30,16 @@
         </div>
 
         <div class="button-menu">
-            <button id="intentional" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="openPotty(0)">
-                <i class="icon super-happy-outline"></i>
-            </button>
-            <button id="accident" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="openPotty(1)">
-                <i class="icon super-sad-outline"></i>
-            </button>
+            <super-navigate view-id="new-potty">
+                <button id="intentional" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty(0)">
+                    <i class="icon super-happy-outline"></i>
+                </button>
+            </super-navigate>
+            <super-navigate view-id="new-potty">
+                <button id="accident" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty(a)">
+                    <i class="icon super-sad-outline"></i>
+                </button>
+            </super-navigate>
 
             <button class="button main-menu" ng-click="togglePottyMenu()">
                 <i class="icon super-plus-round"></i>

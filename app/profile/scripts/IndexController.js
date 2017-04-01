@@ -75,7 +75,7 @@ angular
         };
 
         $scope.showPottyView = function() {
-            supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
+            // supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
             $scope.showMainMenu = false;
             $scope.dim = "";
         };
@@ -155,6 +155,7 @@ angular
             } else {
                 $scope.puppy_index++;
             }
+            supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
         };
 
         $scope.previousProfile = function() {
@@ -163,6 +164,7 @@ angular
             } else {
                 $scope.puppy_index--;
             }
+            supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
         };
 
         $scope.setColor = function(index) {
@@ -222,8 +224,10 @@ angular
         var init = function() {
             // potty
             $scope.showPottyMenu = false;
-            $scope.potties = [];
             $scope.currentPuppyIndex = 0;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.potties = [];
         };
 
         supersonic.ui.views.current.whenVisible(function () {
@@ -234,16 +238,22 @@ angular
             }
         });
 
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+                $scope.potties = $scope.puppy.potty;
+            });
+
+        });
+
         $scope.togglePottyMenu = function() {
             $scope.showPottyMenu = !$scope.showPottyMenu;
         };
 
+        $scope.newPotty = function(type) {
+            $scope.showPottyMenu = false;
+        };
+        // TODO: turn getDate into a service
         init();
-
-        supersonic.data.channel('puppyIndex').subscribe(function(message) {
-            $scope.$apply(function() {
-                $scope.currentPuppyIndex = message;
-            });
-        });
-
     });
