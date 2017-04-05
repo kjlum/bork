@@ -1,4 +1,4 @@
-<div class="view" ng-controller="PottyController">
+<div class="view" ng-controller="NewPottyController">
     <super-navbar>
         <super-navbar-title ng-bind="puppy.name">
         </super-navbar-title>
@@ -11,7 +11,7 @@
         <div class="white-panel">
             <label class="title">
                 Date and Time:
-                <input class="puppy-input" type="datetime-local"/>
+                <input class="puppy-input" type="datetime-local" ng-model="date"/>
             </label>
 
             <div class="potty-type">
@@ -31,9 +31,11 @@
                     Accident
                 </label>
             </div>
+
+            <button class="button save" ng-click="saveEvent()">
+                Save
+            </button>
         </div>
 
-        <div class="button-menu">
-        </div>
     </div>
 </div>

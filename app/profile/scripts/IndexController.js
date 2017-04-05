@@ -230,6 +230,7 @@ angular
             $scope.potties = [];
         };
 
+        // TODO: need this still?
         supersonic.ui.views.current.whenVisible(function () {
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
@@ -238,13 +239,13 @@ angular
             }
         });
 
+        // when a new index comes in, update current index, puppy, and potty
         supersonic.data.channel('puppyIndex').subscribe(function(message) {
             $scope.$apply(function() {
                 $scope.currentPuppyIndex = message;
                 $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
                 $scope.potties = $scope.puppy.potty;
             });
-
         });
 
         $scope.togglePottyMenu = function() {
@@ -253,7 +254,42 @@ angular
 
         $scope.newPotty = function(type) {
             $scope.showPottyMenu = false;
+            supersonic.data.channel('pottyEvent').publish(type === "accident");
         };
+
         // TODO: turn getDate into a service
+        init();
+    })
+    .controller('NewPottyController', function($scope, supersonic, util) {
+        var init = function() {
+            $scope.accident = false;
+            $scope.currentPuppyIndex = 0;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.potties = [];
+        }
+
+        supersonic.data.channel('pottyEvent').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.accident = message;
+            });
+        });
+
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+                $scope.potties = $scope.puppy.potty;
+            });
+        });
+
+        $scope.saveEvent = function() {
+            supersonic.logger.log($scope.accident);
+            var date = formatDate($scope.date);
+            var pee = $scope.pee;
+            var poop = $scope.poop;
+            var accident = $scope.accident;
+        };
+
         init();
     });

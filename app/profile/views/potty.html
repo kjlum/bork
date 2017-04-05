@@ -31,12 +31,12 @@
 
         <div class="button-menu">
             <super-navigate view-id="new-potty">
-                <button id="intentional" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty(0)">
+                <button id="intentional" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty('intentional')" >
                     <i class="icon super-happy-outline"></i>
                 </button>
             </super-navigate>
             <super-navigate view-id="new-potty">
-                <button id="accident" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty(a)">
+                <button id="accident" class="button icon fadeMenu" ng-show="showPottyMenu" ng-click="newPotty('accident')">
                     <i class="icon super-sad-outline"></i>
                 </button>
             </super-navigate>
