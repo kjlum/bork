@@ -1,11 +1,29 @@
 angular
     .module('profile', ['common', 'ngAnimate', 'ngTouch'])
     .service('util', function() {
-        return {
+        var utilities = {
             isNullorUndefined: function(item) {
                 return angular.isUndefined(item) || item === null;
+            },
+            formatDate: function(date) {
+                if(utilities.isNullorUndefined(date)) {
+                    return "--";
+                }
+
+                var date = new Date(date);
+                var month = date.getMonth() + 1;
+                if(month < 10) {
+                    month = '0' + month;
+                }
+                var day = date.getDate();
+                if(day < 10) {
+                    day = '0' + day;
+                }
+                return date.getFullYear() + "-" + month + "-" + day;
             }
         };
+        return utilities;
+
     })
     .controller('IndexController', function($scope, supersonic, util) {
 
@@ -41,22 +59,6 @@ angular
                 day = '0' + day;
             }
             return today.getFullYear() + "-" + month + "-" + day;
-        };
-
-        var formatDate = function(date) {
-            if(util.isNullorUndefined(date)) {
-                return "--";
-            }
-            var date = new Date(date);
-            var month = date.getMonth() + 1;
-            if(month < 10) {
-                month = '0' + month;
-            }
-            var day = date.getDate();
-            if(day < 10) {
-                day = '0' + day;
-            }
-            return date.getFullYear() + "-" + month + "-" + day;
         };
         
         /* Functions for the index and new profile views */
@@ -97,7 +99,7 @@ angular
 
         $scope.saveProfile = function() {
             var name = $scope.name;
-            var birthday = formatDate($scope.birthday);
+            var birthday = util.formatDate($scope.birthday);
             var breed = $scope.breed;
             var puppyPicture = "/images/default_puppy.jpg";
 
@@ -112,18 +114,17 @@ angular
             if(util.isNullorUndefined(name)) {
                 supersonic.ui.dialog.alert("Please include a name.");
             } else {
-                var profile = 
-                    {
-                        "name": name,
-                        "birthday": birthday,
-                        "breed": breed,
-                        "last_potty": "none",
-                        "next_potty": "none",
-                        "symptoms": "none",
-                        "picture": puppyPicture,
-                        "health": [],
-                        "potty": []
-                    };
+                var profile = {
+                    "name": name,
+                    "birthday": birthday,
+                    "breed": breed,
+                    "last_potty": "none",
+                    "next_potty": "none",
+                    "symptoms": "none",
+                    "picture": puppyPicture,
+                    "health": [],
+                    "potty": []
+                };
                 $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
                 if($scope.puppies === null) {
                     $scope.puppies = [];
@@ -227,17 +228,8 @@ angular
             $scope.currentPuppyIndex = 0;
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-            $scope.potties = [];
+            $scope.potties = $scope.puppy.potty;
         };
-
-        // TODO: need this still?
-        supersonic.ui.views.current.whenVisible(function () {
-            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
-            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-            if(!util.isNullorUndefined($scope.puppy)) {
-                $scope.potties = $scope.puppy.potty;
-            }
-        });
 
         // when a new index comes in, update current index, puppy, and potty
         supersonic.data.channel('puppyIndex').subscribe(function(message) {
@@ -284,11 +276,24 @@ angular
         });
 
         $scope.saveEvent = function() {
-            supersonic.logger.log($scope.accident);
-            var date = formatDate($scope.date);
-            var pee = $scope.pee;
-            var poop = $scope.poop;
-            var accident = $scope.accident;
+            if(util.isNullorUndefined($scope.date)) {
+                supersonic.ui.dialog.alert("Please include a date.");
+            } else if(util.isNullorUndefined($scope.pee) && util.isNullorUndefined($scope.poop)) {
+                supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
+            } else {
+                var pottyEvent = {
+                    "date": $scope.date,
+                    "pee": !util.isNullorUndefined($scope.pee),
+                    "poop": !util.isNullorUndefined($scope.poop),
+                    "accident": $scope.accident
+                };
+                $scope.potties.push(pottyEvent);
+                $scope.puppy.potty = $scope.potties;
+                $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
+                localStorage.setItem('puppies', JSON.stringify($scope.puppies));
+                // // TODO: clear all fields, remove view
+                // supersonic.ui.layers.pop();
+            }
         };
 
         init();
