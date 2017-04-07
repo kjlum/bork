@@ -22,10 +22,10 @@
             <div class="nothing" ng-show="potties.length === 0">Nothing here!</div>
 
             <div class="list">
-                <a class="item item-icon-left" href="#" ng-repeat="event in potties | reverse">
+                <a class="item item-icon-left" href="#" ng-repeat="event in potties | orderBy:['-date','-time']">
                     <i class="icon super-happy-outline" ng-show="!event.accident"></i>
                     <i class="icon super-sad-outline" ng-show="event.accident"></i>
-                    <span class="date">{{event.date}}</span>
+                    <span class="datetime">{{event.date | date:'yyyy-MM-dd'}}, {{event.time | date:'h:mm a'}}</span>
                     {{event.pee ? (event.poop ? "Pee/Poop" : "Pee") : "Poop"}}
                 </a>
             </div>

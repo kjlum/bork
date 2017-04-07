@@ -10,8 +10,12 @@
         
         <div class="white-panel">
             <label class="title">
-                Date and Time:
-                <input class="puppy-input" type="datetime-local" ng-model="date"/>
+                Date:
+                <input class="puppy-input" type="date" ng-model="date" max="{{today}}"/>
+            </label>
+            <label class="title">
+                Time:
+                <input class="puppy-input" type="time" ng-model="ptime"/>
             </label>
 
             <div class="potty-type">
