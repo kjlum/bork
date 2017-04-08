@@ -62,9 +62,11 @@
                     <i class="icon super-nuclear"></i>
                 </button>
             </super-navigate>
-            <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
-                <i class="icon super-medkit"></i>
-            </button>
+            <super-navigate view-id="health">
+                <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
+                    <i class="icon super-medkit"></i>
+                </button>
+            </super-navigate>
             <super-navigate location="profile#settings">
                 <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showSettings()">
                     <i class="icon super-gear-a"></i>

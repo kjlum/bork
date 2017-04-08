@@ -398,4 +398,23 @@ angular
         };
 
         init();
+    })
+    .controller('HealthController', function($scope, supersonic) {
+        var init = function() {
+            // potty
+            $scope.showHealthMenu = false;
+            $scope.currentPuppyIndex = 0;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+        };
+
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+                $scope.potties = $scope.puppy.potty;
+            });
+        });
+
+        init();
     });
