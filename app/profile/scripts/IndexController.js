@@ -1,5 +1,5 @@
 angular
-    .module('profile', ['common', 'ngAnimate', 'ngTouch'])
+    .module('profile', ['common', 'ngAnimate', 'ngTouch', 'chart.js'])
     .service('util', function() {
         var utilities = {
             isNullorUndefined: function(item) {
@@ -33,6 +33,71 @@ angular
                     day = '0' + day;
                 }
                 return today.getFullYear() + "-" + month + "-" + day;
+            },
+            getPottyFrequency: function(potties, days) {
+                var cutoff = new Date();
+                cutoff.setDate(cutoff.getDate() - days);
+                var peeResult =  new Array(days).fill(0);
+                var poopResult = new Array(days).fill(0);
+                // check if potty day is within past $days days
+                for(var i = 0; i < potties.length; i++) {
+                    var pottyDate = new Date(potties[i].date);
+                    if(pottyDate >= cutoff) {
+                        var pee = potties[i].pee;
+                        var poop = potties[i].poop;
+                        // number of days ago
+                        var timeDiff = Math.abs(cutoff.getTime() - pottyDate.getTime());
+                        var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+                        if(pee && poop) {
+                            peeResult[diffDays] += 1;
+                            poopResult[diffDays] += 1;
+                        } else if(pee) {
+                            peeResult[diffDays] += 1;
+                        } else {
+                            poopResult[diffDays] += 1;
+                        }
+                    }
+                }
+                var totalResult = [
+                    peeResult,
+                    poopResult
+                ];
+                return totalResult;
+            },
+            getAccidentFrequency: function(potties, days) {
+                var cutoff = new Date();
+                cutoff.setDate(cutoff.getDate() - days);
+                var accidentResult =  new Array(days).fill(0);
+                var intentionalResult = new Array(days).fill(0);
+                // check if potty day is within past $days days
+                for(var i = 0; i < potties.length; i++) {
+                    var pottyDate = new Date(potties[i].date);
+                    if(pottyDate >= cutoff) {
+                        var accident = potties[i].accident;
+                        // number of days ago
+                        var timeDiff = Math.abs(cutoff.getTime() - pottyDate.getTime());
+                        var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+                        if(accident) {
+                            accidentResult[diffDays] += 1;
+                        } else {
+                            intentionalResult[diffDays] += 1;
+                        }
+                    }
+                }
+                var totalResult = [
+                    accidentResult,
+                    intentionalResult
+                ];
+                return totalResult;
+            },
+            getDateRange: function(days) {
+                var result = new Array(days);
+                for(var i = 0; i < days; i++) {
+                    var day = new Date();
+                    day.setDate(day.getDate() - i);
+                    result[days - i - 1] = (day.getMonth() + 1) + "/" + day.getDate();
+                }
+                return result;
             }
         };
         return utilities;
@@ -226,6 +291,16 @@ angular
     })
     .controller('PottyController', function($scope, supersonic, util) {
         /* Functions for the potty view */
+        var getGraphData = function() {
+            $scope.potty_labels = util.getDateRange($scope.dateRange);
+            $scope.potty_series = ['Pee', 'Poop'];
+            $scope.potty_data = util.getPottyFrequency($scope.potties, $scope.dateRange);
+
+            $scope.accident_labels = util.getDateRange($scope.dateRange);
+            $scope.accident_series = ['Accident', 'Intentional'];
+            $scope.accident_data = util.getAccidentFrequency($scope.potties, $scope.dateRange);
+        };
+
         var init = function() {
             // potty
             $scope.showPottyMenu = false;
@@ -233,6 +308,8 @@ angular
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             $scope.potties = $scope.puppy.potty;
+            $scope.dateRange = 7;
+            getGraphData();
         };
 
         // when we return after adding an event
@@ -242,6 +319,7 @@ angular
             if(!util.isNullorUndefined($scope.puppy)) {
                 $scope.$apply(function() {
                     $scope.potties = $scope.puppy.potty;
+                    getGraphData();
                 });
             }
         });

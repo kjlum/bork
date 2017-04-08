@@ -6,6 +6,7 @@
     "angular": "1.6.3",
     "supersonic": "1.x",
     "angular-animate": "^1.6.3",
-    "angular-touch": "^1.6.3"
+    "angular-touch": "^1.6.3",
+    "angular-chart.js": "^1.1.1"
   }
 }
