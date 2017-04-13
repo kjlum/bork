@@ -16,10 +16,6 @@ module.exports =
       id: "new-potty"
       location: "profile#new-potty"
     }
-    {
-      id: "health"
-      location: "profile#health"
-    }
   ]
 
   # drawers:
