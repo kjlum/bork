@@ -10,12 +10,10 @@
         
         <div class="white-panel">
             <h4 class="page-name">Potty Frequency</h4>
-            <canvas class="chart chart-bar" chart-data="potty_data" chart-labels="potty_labels" chart-series="potty_series">
-            </canvas>
+            <div class="nothing" ng-show="potties.length === 0">Nothing here!</div>
 
             <h4 class="page-name">Accident Frequency</h4>
-            <canvas class="chart chart-bar" chart-data="accident_data" chart-labels="accident_labels" chart-series="accident_series">
-            </canvas>
+            <div class="nothing" ng-show="potties.length === 0">Nothing here!</div>
         </div>
 
         <div class="white-panel">
