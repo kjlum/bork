@@ -140,18 +140,7 @@ angular
             }
         };
 
-        $scope.showHistoryView = function() {
-            $scope.showMainMenu = false;
-            $scope.dim = "";
-        };
-
-        $scope.showPottyView = function() {
-            // supersonic.data.channel('puppyIndex').publish($scope.puppy_index);
-            $scope.showMainMenu = false;
-            $scope.dim = "";
-        };
-
-        $scope.showSettings = function() {
+        $scope.nextView = function() {
             $scope.showMainMenu = false;
             $scope.dim = "";
         };
@@ -415,6 +404,10 @@ angular
                 $scope.potties = $scope.puppy.potty;
             });
         });
+
+        $scope.toggleHealthMenu = function() {
+            $scope.showHealthMenu = !$scope.showHealthMenu;
+        };
 
         init();
     });

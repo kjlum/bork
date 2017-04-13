@@ -53,22 +53,22 @@
 
         <div class="button-menu">
             <super-navigate location="profile#history">
-                <button id="history" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showHistoryView()">
+                <button id="history" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="nextView()">
                     <i class="icon super-android-time"></i>
                 </button>
             </super-navigate>
             <super-navigate view-id="potty">
-                <button id="potty" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showPottyView()">
+                <button id="potty" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="nextView()">
                     <i class="icon super-nuclear"></i>
                 </button>
             </super-navigate>
             <super-navigate view-id="health">
-                <button id="health" class="button icon fadeMenu" ng-show="showMainMenu">
+                <button id="health" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="nextView()">
                     <i class="icon super-medkit"></i>
                 </button>
             </super-navigate>
             <super-navigate location="profile#settings">
-                <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="showSettings()">
+                <button id="settings" class="button icon fadeMenu" ng-show="showMainMenu" ng-click="nextView()">
                     <i class="icon super-gear-a"></i>
                 </button>
             </super-navigate>
