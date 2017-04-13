@@ -335,6 +335,16 @@ angular
         init();
     })
     .controller('NewPottyController', function($scope, supersonic, util) {
+        var getCalendarData = function() {
+            // $scope.potty_labels = util.getDateRange($scope.dateRange);
+            // $scope.potty_series = ['Pee', 'Poop'];
+            // $scope.potty_data = util.getPottyFrequency($scope.potties, $scope.dateRange);
+
+            // $scope.accident_labels = util.getDateRange($scope.dateRange);
+            // $scope.accident_series = ['Accident', 'Intentional'];
+            // $scope.accident_data = util.getAccidentFrequency($scope.potties, $scope.dateRange);
+        };
+
         var init = function() {
             $scope.accident = false;
             $scope.currentPuppyIndex = 0;
@@ -342,7 +352,7 @@ angular
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             $scope.potties = $scope.puppy.potty;
             $scope.today = util.getToday();
-        }
+        };
 
         supersonic.data.channel('pottyEvent').subscribe(function(message) {
             $scope.$apply(function() {
@@ -384,6 +394,51 @@ angular
                 $scope.accident = false;
                 supersonic.ui.layers.pop();
             }
+        };
+
+        init();
+    })
+    .controller('HealthController', function($scope, supersonic, util) {
+        /* Functions for the health view */
+
+        var init = function() {
+            $scope.showHealthMenu = false;
+            $scope.currentPuppyIndex = 0;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.symptoms = $scope.puppy.health;
+            $scope.dateRange = 7;
+            // getGraphData();
+        };
+
+        // when we return after adding an event
+        supersonic.ui.views.current.whenVisible(function () {
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            if(!util.isNullorUndefined($scope.puppy)) {
+                $scope.$apply(function() {
+                    $scope.symptoms = $scope.puppy.health;
+                    // getGraphData();
+                });
+            }
+        });
+
+        // when a new index comes in, update current index, puppy, and symptoms
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+                $scope.symptoms = $scope.puppy.health;
+            });
+        });
+
+        $scope.toggleHealthMenu = function() {
+            $scope.showHealthMenu = !$scope.showHealthMenu;
+        };
+
+        $scope.newSymptom = function(type) {
+            $scope.showHealthMenu = false;
+            // supersonic.data.channel('pottyEvent').publish(type === "accident");
         };
 
         init();

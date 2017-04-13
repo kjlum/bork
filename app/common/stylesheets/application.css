@@ -140,13 +140,25 @@
     background-color: red;
 }
 
+#first_recent {
+    bottom: 75px;
+    right: 75px;
+    background-color: red;
+}
+
+#generic {
+    bottom: 100px;
+    right: 0px;
+    background-color: red;
+}
+
 #health {
     bottom: 75px;
     right: 130px;
     background-color: yellow;
 }
 
-#health, #history, #paw, #potty, #settings, .main-menu, #intentional, #accident {
+#health, #history, #paw, #potty, #settings, .main-menu, #intentional, #accident, #generic, #first_recent, #second_recent {
     position: fixed;
     height: 60px;
     width: 60px;
@@ -171,6 +183,12 @@
     bottom: 130px;
     right: 75px;
     background-color: orange;
+}
+
+#second_recent {
+    bottom: 0px;
+    right: 100px;
+    background-color: red;
 }
 
 #settings {
