@@ -380,19 +380,22 @@ angular
         });
 
         $scope.saveEvent = function() {
+            var pee = util.isNullorUndefined($scope.pee) ? false : $scope.pee;
+            var poop = util.isNullorUndefined($scope.poop) ? false : $scope.poop;
             if(util.isNullorUndefined($scope.date)) {
                 supersonic.ui.dialog.alert("Please include a date.");
             } else if(util.isNullorUndefined($scope.ptime)) {
                 supersonic.ui.dialog.alert("Please include a time.");
-            } else if(util.isNullorUndefined($scope.pee) && util.isNullorUndefined($scope.poop)) {
+            } else if(!pee && !poop) {
                 supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
             } else {
                 var pottyEvent = {
                     "date": $scope.date,
                     "time": $scope.ptime,
-                    "pee": !util.isNullorUndefined($scope.pee),
-                    "poop": !util.isNullorUndefined($scope.poop),
-                    "accident": $scope.accident
+                    "pee": pee,
+                    "poop": poop,
+                    "accident": $scope.accident,
+                    "index": $scope.potties.length
                 };
                 $scope.potties.push(pottyEvent);
                 $scope.puppy.potty = $scope.potties;
@@ -427,6 +430,7 @@ angular
                 $scope.pee = message.pee;
                 $scope.poop = message.poop;
                 $scope.accident = message.accident;
+                $scope.pottyIndex = message.index;
             });
         });
 
@@ -439,31 +443,37 @@ angular
         });
 
         $scope.saveEvent = function() {
-            // if(util.isNullorUndefined($scope.date)) {
-            //     supersonic.ui.dialog.alert("Please include a date.");
-            // } else if(util.isNullorUndefined($scope.ptime)) {
-            //     supersonic.ui.dialog.alert("Please include a time.");
-            // } else if(util.isNullorUndefined($scope.pee) && util.isNullorUndefined($scope.poop)) {
-            //     supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
-            // } else {
-            //     var pottyEvent = {
-            //         "date": $scope.date,
-            //         "time": $scope.ptime,
-            //         "pee": !util.isNullorUndefined($scope.pee),
-            //         "poop": !util.isNullorUndefined($scope.poop),
-            //         "accident": $scope.accident
-            //     };
-            //     $scope.potties.push(pottyEvent);
-            //     $scope.puppy.potty = $scope.potties;
-            //     $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
-            //     localStorage.setItem('puppies', JSON.stringify($scope.puppies));
-            //     $scope.date = null;
-            //     $scope.ptime = null;
-            //     $scope.pee = null;
-            //     $scope.poop = null;
-            //     $scope.accident = false;
-            //     supersonic.ui.layers.pop();
-            // }
+            var pee = util.isNullorUndefined($scope.pee) ? false : $scope.pee;
+            var poop = util.isNullorUndefined($scope.poop) ? false : $scope.poop;
+            if(util.isNullorUndefined($scope.date)) {
+                supersonic.ui.dialog.alert("Please include a date.");
+            } else if(util.isNullorUndefined($scope.ptime)) {
+                supersonic.ui.dialog.alert("Please include a time.");
+            } else if(!pee && !poop) {
+                supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
+            } else {
+                // search potties for editPotty event, update puppy.potty, etc.
+                for(var i = 0; i < $scope.potties.length; i++) {
+                    var potty = $scope.potties[i];
+                    if(potty.index === $scope.pottyIndex) {
+                        $scope.potties[i].date = $scope.date;
+                        $scope.potties[i].time = $scope.ptime;
+                        $scope.potties[i].pee = pee;
+                        $scope.potties[i].poop = poop;
+                        $scope.potties[i].accident = $scope.accident;
+                        break;
+                    }
+                }
+                $scope.puppy.potty = $scope.potties;
+                $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
+                localStorage.setItem('puppies', JSON.stringify($scope.puppies));
+                $scope.date = null;
+                $scope.ptime = null;
+                $scope.pee = null;
+                $scope.poop = null;
+                $scope.accident = false;
+                supersonic.ui.layers.pop();
+            }
         };
 
         init();
