@@ -17,6 +17,10 @@ module.exports =
       location: "profile#new-potty"
     }
     {
+      id: "edit-potty"
+      location: "profile#edit-potty"
+    }
+    {
       id: "health"
       location: "profile#health"
     }

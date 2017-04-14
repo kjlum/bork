@@ -297,6 +297,7 @@ angular
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             $scope.potties = $scope.puppy.potty;
+            $scope.dim = "";
             $scope.dateRange = 7;
             getGraphData();
         };
@@ -324,11 +325,21 @@ angular
 
         $scope.togglePottyMenu = function() {
             $scope.showPottyMenu = !$scope.showPottyMenu;
+            if($scope.dim === "") {
+                $scope.dim = "view-dark";
+            } else {
+                $scope.dim = "";
+            }
         };
 
         $scope.newPotty = function(type) {
+            $scope.dim = "";
             $scope.showPottyMenu = false;
             supersonic.data.channel('pottyEvent').publish(type === "accident");
+        };
+
+        $scope.editPotty = function(event) {
+            supersonic.data.channel('editPotty').publish(event);
         };
 
         // TODO: turn getDate into a service
@@ -336,13 +347,13 @@ angular
     })
     .controller('NewPottyController', function($scope, supersonic, util) {
         var getCalendarData = function() {
-            // $scope.potty_labels = util.getDateRange($scope.dateRange);
-            // $scope.potty_series = ['Pee', 'Poop'];
-            // $scope.potty_data = util.getPottyFrequency($scope.potties, $scope.dateRange);
+            $scope.potty_labels = util.getDateRange($scope.dateRange);
+            $scope.potty_series = ['Pee', 'Poop'];
+            $scope.potty_data = util.getPottyFrequency($scope.potties, $scope.dateRange);
 
-            // $scope.accident_labels = util.getDateRange($scope.dateRange);
-            // $scope.accident_series = ['Accident', 'Intentional'];
-            // $scope.accident_data = util.getAccidentFrequency($scope.potties, $scope.dateRange);
+            $scope.accident_labels = util.getDateRange($scope.dateRange);
+            $scope.accident_series = ['Accident', 'Intentional'];
+            $scope.accident_data = util.getAccidentFrequency($scope.potties, $scope.dateRange);
         };
 
         var init = function() {
@@ -398,9 +409,67 @@ angular
 
         init();
     })
+    .controller('EditPottyController', function($scope, supersonic, util) {
+        var init = function() {
+            $scope.accident = false;
+            $scope.currentPuppyIndex = 0;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.potties = $scope.puppy.potty;
+            $scope.today = util.getToday();
+        };
+
+        supersonic.data.channel('editPotty').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.editEvent = message;
+                $scope.date = new Date(message.date);
+                $scope.ptime = new Date(message.time);
+                $scope.pee = message.pee;
+                $scope.poop = message.poop;
+                $scope.accident = message.accident;
+            });
+        });
+
+        supersonic.data.channel('puppyIndex').subscribe(function(message) {
+            $scope.$apply(function() {
+                $scope.currentPuppyIndex = message;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+                $scope.potties = $scope.puppy.potty;
+            });
+        });
+
+        $scope.saveEvent = function() {
+            // if(util.isNullorUndefined($scope.date)) {
+            //     supersonic.ui.dialog.alert("Please include a date.");
+            // } else if(util.isNullorUndefined($scope.ptime)) {
+            //     supersonic.ui.dialog.alert("Please include a time.");
+            // } else if(util.isNullorUndefined($scope.pee) && util.isNullorUndefined($scope.poop)) {
+            //     supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
+            // } else {
+            //     var pottyEvent = {
+            //         "date": $scope.date,
+            //         "time": $scope.ptime,
+            //         "pee": !util.isNullorUndefined($scope.pee),
+            //         "poop": !util.isNullorUndefined($scope.poop),
+            //         "accident": $scope.accident
+            //     };
+            //     $scope.potties.push(pottyEvent);
+            //     $scope.puppy.potty = $scope.potties;
+            //     $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
+            //     localStorage.setItem('puppies', JSON.stringify($scope.puppies));
+            //     $scope.date = null;
+            //     $scope.ptime = null;
+            //     $scope.pee = null;
+            //     $scope.poop = null;
+            //     $scope.accident = false;
+            //     supersonic.ui.layers.pop();
+            // }
+        };
+
+        init();
+    })
     .controller('HealthController', function($scope, supersonic, util) {
         /* Functions for the health view */
-
         var init = function() {
             $scope.showHealthMenu = false;
             $scope.currentPuppyIndex = 0;
