@@ -145,6 +145,15 @@ angular
             $scope.dim = "";
         };
 
+        $scope.showPottyView = function() {
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.puppy_index];
+            $scope.potties = $scope.puppy.potty;
+            supersonic.data.channel('updatedPotties').publish($scope.potties);
+            $scope.showMainMenu = false;
+            $scope.dim = "";
+        };
+
         $scope.showNewPuppy = function() {
             $scope.puppyPicture = null;
             supersonic.ui.initialView.show();
@@ -302,24 +311,13 @@ angular
             getGraphData();
         };
 
-        // when we return after adding an event
-        // supersonic.ui.views.current.whenVisible(function () {
-        //     $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
-        //     $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-        //     if(!util.isNullorUndefined($scope.puppy)) {
-        //         $scope.$apply(function() {
-        //             $scope.potties = $scope.puppy.potty;
-        //             getGraphData();
-        //         });
-        //     }
-        // });
-
         // when a new index comes in, update current index, puppy, and potty
         supersonic.data.channel('puppyIndex').subscribe(function(message) {
             $scope.$apply(function() {
                 $scope.currentPuppyIndex = message;
                 $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
                 $scope.potties = $scope.puppy.potty;
+                getGraphData();
             });
         });
 
@@ -330,6 +328,7 @@ angular
                 $scope.puppy.potty = $scope.potties;
                 $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
                 localStorage.setItem('puppies', JSON.stringify($scope.puppies));
+                getGraphData();
             });
         });
 
@@ -347,38 +346,28 @@ angular
             $scope.showPottyMenu = false;
             var message = {
                 'potties': $scope.potties,
-                'accident': type === "accident"
+                'accident': type === "accident",
+                'index': $scope.currentPuppyIndex
             };
             supersonic.data.channel('newPottyEvent').publish(message);
         };
 
         $scope.editPotty = function(event) {
-            var index;
-            // search potty events for event by ID
-            for(var i = 0; i < $scope.potties.length; i++) {
-                var potty = $scope.potties[i];
-                if(potty.id === event.id) {
-                    index = i;
-                    break;
-                }
-            }
             var message = {
                 'event': event,
-                'index': index
+                'index':  $scope.currentPuppyIndex
             };
-            supersonic.data.channel('editPottyTarget').publish(message);
+            supersonic.data.channel('editPottyEvent').publish(message);
         };
 
-        // TODO: turn getDate into a service
         init();
     })
     .controller('NewPottyController', function($scope, supersonic, util) {
         var init = function() {
             $scope.accident = false;
             $scope.currentPuppyIndex = 0;
-            // $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
-            // $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-            // $scope.potties = $scope.puppy.potty;
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             $scope.today = util.getToday();
         };
 
@@ -386,12 +375,7 @@ angular
             $scope.$apply(function() {
                 $scope.potties = message.potties;
                 $scope.accident = message.accident;
-            });
-        });
-
-        supersonic.data.channel('puppyIndex').subscribe(function(message) {
-            $scope.$apply(function() {
-                $scope.currentPuppyIndex = message;
+                $scope.currentPuppyIndex = message.index;
                 $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
             });
         });
@@ -435,12 +419,13 @@ angular
             $scope.currentPuppyIndex = 0;
             $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
             $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-            $scope.potties = $scope.puppy.potty;
             $scope.today = util.getToday();
         };
 
-        supersonic.data.channel('editPottyTarget').subscribe(function(message) {
+        supersonic.data.channel('editPottyEvent').subscribe(function(message) {
             $scope.$apply(function() {
+                $scope.currentPuppyIndex = message.index;
+                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
                 // get event data, populate form
                 $scope.editEvent = message.event;
                 $scope.date = new Date($scope.editEvent.date);
@@ -449,62 +434,65 @@ angular
                 $scope.poop = $scope.editEvent.poop;
                 $scope.accident = $scope.editEvent.accident;
                 $scope.eventId = $scope.editEvent.id;
-                // get location in potty event array
-                $scope.eventIndex = message.index;
-            });
-        });
-
-        supersonic.data.channel('puppyIndex').subscribe(function(message) {
-            $scope.$apply(function() {
-                $scope.currentPuppyIndex = message;
-                $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
-                $scope.potties = $scope.puppy.potty;
             });
         });
 
         $scope.saveEvent = function() {
-            // unspeakable horrors
-            
-            // var pee = util.isNullorUndefined($scope.pee) ? false : $scope.pee;
-            // var poop = util.isNullorUndefined($scope.poop) ? false : $scope.poop;
-            // if(util.isNullorUndefined($scope.date)) {
-            //     supersonic.ui.dialog.alert("Please include a date.");
-            // } else if(util.isNullorUndefined($scope.ptime)) {
-            //     supersonic.ui.dialog.alert("Please include a time.");
-            // } else if(!pee && !poop) {
-            //     supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
-            // } else {
-            //     var id = new Date().getTime();
-            //     var pottyEvent = {
-            //         "date": $scope.date,
-            //         "time": $scope.ptime,
-            //         "pee": pee,
-            //         "poop": poop,
-            //         "accident": $scope.accident,
-            //         "id": id
-            //     };
-            //     $scope.potties.splice($scope.eventIndex, 1);
-            //     $scope.potties.push(pottyEvent);
-            //     $scope.puppy.potty = $scope.potties;
-            //     $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
-            //     localStorage.setItem('puppies', JSON.stringify($scope.puppies));
-            //     $scope.date = null;
-            //     $scope.ptime = null;
-            //     $scope.pee = null;
-            //     $scope.poop = null;
-            //     $scope.accident = false;
-            //     supersonic.ui.dialog.alert($scope.potties);
-            //     supersonic.ui.layers.pop();
-            // }
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.potties = $scope.puppy.potty;
+            var index = 0;
+            for(var i = 0; i < $scope.potties.length; i++) {
+                if($scope.potties[i].id === $scope.eventId) {
+                    index = i;
+                    break;
+                }
+            }
+
+            var pee = util.isNullorUndefined($scope.pee) ? false : $scope.pee;
+            var poop = util.isNullorUndefined($scope.poop) ? false : $scope.poop;
+            if(util.isNullorUndefined($scope.date)) {
+                supersonic.ui.dialog.alert("Please include a date.");
+            } else if(util.isNullorUndefined($scope.ptime)) {
+                supersonic.ui.dialog.alert("Please include a time.");
+            } else if(!pee && !poop) {
+                supersonic.ui.dialog.alert("Please include whether " + $scope.puppy.name + " peed or pooped.");
+            } else {
+                var id = new Date().getTime();
+                var pottyEvent = {
+                    "date": $scope.date,
+                    "time": $scope.ptime,
+                    "pee": pee,
+                    "poop": poop,
+                    "accident": $scope.accident,
+                    "id": id
+                };
+                $scope.potties.splice(index, 1);
+                $scope.potties.push(pottyEvent);
+                $scope.date = null;
+                $scope.ptime = null;
+                $scope.pee = null;
+                $scope.poop = null;
+                $scope.accident = false;
+                supersonic.data.channel('updatedPotties').publish($scope.potties);
+                supersonic.ui.layers.pop();
+            }
         };
 
         $scope.deleteEvent = function() {
-            // change local potties, persist to storage
-            // $scope.potties.splice($scope.eventIndex, 1);
-            // $scope.puppy.potty = $scope.potties;
-            // $scope.puppies[$scope.currentPuppyIndex] = $scope.puppy;
-            // localStorage.setItem('puppies', JSON.stringify($scope.puppies));
-            supersonic.ui.dialog.alert($scope.eventIndex);
+            $scope.puppies = JSON.parse(localStorage.getItem('puppies'));
+            $scope.puppy = $scope.puppies[$scope.currentPuppyIndex];
+            $scope.potties = $scope.puppy.potty;
+            var index = 0;
+            // search potty events for event by ID
+            for(var i = 0; i < $scope.potties.length; i++) {
+                if($scope.potties[i].id === $scope.eventId) {
+                    index = i;
+                    break;
+                }
+            }
+            $scope.potties.splice(index, 1);
+            supersonic.data.channel('updatedPotties').publish($scope.potties);
             supersonic.ui.layers.pop();
         };
 
